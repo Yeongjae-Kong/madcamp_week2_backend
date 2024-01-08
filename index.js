@@ -20,8 +20,8 @@ app.use(express.json());
 const userRouter = require('./routes/userrouter');
 app.use('/user', userRouter);
 
-const roomRouter = require('./routes/roomrouter');
-app.use('/room', roomRouter);
+const groupbuying = require('./routes/groupbuying');
+app.use('/groupbuying', groupbuying);
 
 const participateRouter = require('./routes/participaterouter');
 app.use('/participate', participateRouter);

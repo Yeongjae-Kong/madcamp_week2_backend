@@ -34,6 +34,11 @@ groupbuying.post('/creategroupbuying', async (req, res) => {
   }
       
   await connection.query(`INSERT INTO groupbuyings (email, title, content, image, member) VALUES ("${groupbuyingpost.email}", "${groupbuyingpost.title}", "${groupbuyingpost.content}", "${groupbuyingpost.image}", "${room.member}");`, (error, result, fields) => {
+      if (error) {
+          console.error(error);
+          res.status(500).send('Database Error');
+          return;
+      }
       groupbuyingpost.id = result.insertId;
       res.statusCode = 201;
       res.setHeader('Content-Type', 'text/json');
@@ -54,3 +59,5 @@ groupbuying.delete('/deletegroupbuying/:rid', async (req, res) => {
       }
   });
 });
+
+module.exports = groupbuying;
