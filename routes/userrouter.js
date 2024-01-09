@@ -62,5 +62,18 @@ userRouter.put('/updateuser', async (req, res) => {
     });
 });
 
+userRouter.delete('/deleteuser/:rid', async (req, res) => {
+    connection.query(`DELETE FROM users WHERE u_id = ${req.params.rid}`, (error, result, fields) => {
+        console.log(result);
+        console.log(req.params.rid);
+        if(result.affectedRows === 0) {
+            res.statusCode = 404;
+            res.send(`user Id ${req.params.rid} Not Found`);
+        } else {
+            res.statusCode = 203;
+            res.send(`user Id ${req.params.rid} deleted`);
+        }
+    });
+  });
 
 module.exports = userRouter;
