@@ -26,8 +26,8 @@ app.use('/groupbuying', groupbuyingRouter);
 const groupdeliveryRouter = require('./routes/groupdeliveryrouter');
 app.use('/groupdelivery', groupdeliveryRouter);
 
-const messageRouter = require('./routes/messagerouter');
-app.use('/message', messageRouter);
+const boardRouter = require('./routes/boardrouter');
+app.use('/board', boardRouter);
 
 const profilePicRouter = require('./routes/profilepicrouter');
 app.use('/profilepic', profilePicRouter);
