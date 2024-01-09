@@ -42,12 +42,12 @@ groupbuyingRouter.post('/creategroupbuying', async (req, res) => {
             return;
         }
         groupbuying.id = result.insertId;
-        console.log(user.u_id);
-        res.status(201).json(user);
+        console.log(groupbuying.id);
+        res.status(201).json(groupbuying);
   });
 });
 
-groupbuying.delete('/deletegroupbuying/:rid', async (req, res) => {
+groupbuyingRouter.delete('/deletegroupbuying/:rid', async (req, res) => {
   await connection.query(`DELETE FROM groupbuyings WHERE id = ${req.params.rid}`, (error, result, fields) => {
       console.log(result);
       console.log(req.params.rid);

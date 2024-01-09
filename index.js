@@ -23,8 +23,8 @@ app.use('/user', userRouter);
 const groupbuyingRouter = require('./routes/groupbuyingrouter');
 app.use('/groupbuying', groupbuyingRouter);
 
-const participateRouter = require('./routes/participaterouter');
-app.use('/participate', participateRouter);
+const groupdeliveryRouter = require('./routes/groupdeliveryrouter');
+app.use('/groupdelivery', groupdeliveryRouter);
 
 const messageRouter = require('./routes/messagerouter');
 app.use('/message', messageRouter);
