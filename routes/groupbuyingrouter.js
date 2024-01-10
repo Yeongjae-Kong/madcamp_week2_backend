@@ -48,18 +48,18 @@ groupbuyingRouter.post('/creategroupbuying', async (req, res) => {
   });
 });
 
-groupbuyingRouter.put('/updategroupbuying/:id', (req, res) => {
-  const { id } = req.params;
+groupbuyingRouter.put('/updategroupbuying/:rid', (req, res) => {
+  const rid = req.params.rid;
   var groupbuying = {
-      email: req.body.email,
-      title: req.body.title,
-      content: req.body.content,
-      image: req.body.image,
-      member: req.body.member
-  }
+    email: req.body.email,
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    member: req.body.member
+  };
 
   connection.query(`UPDATE groupbuyings SET email=?, title=?, content=?, image=?, member=? WHERE id=?;`,
-    [groupbuying.email, groupbuying.title, groupbuying.content, groupbuying.image, groupbuying.member, id],
+    [groupbuying.email, groupbuying.title, groupbuying.content, groupbuying.image, groupbuying.member, rid],
     (error, result, fields) => {
       if (error) {
         console.error(error);
@@ -69,7 +69,7 @@ groupbuyingRouter.put('/updategroupbuying/:id', (req, res) => {
       if (result.affectedRows === 0) {
         res.status(404).send('GroupBuying not found');
       } else {
-        res.status(200).json({ id, ...groupbuying });
+        res.status(200).json({ id: rid, ...groupbuying });
       }
   });
 });
