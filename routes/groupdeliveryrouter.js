@@ -48,6 +48,32 @@ groupdeliveryRouter.post('/creategroupdelivery', async (req, res) => {
   });
 });
 
+groupdeliveryRouter.put('/updategroupdelivery/:rid', (req, res) => {
+  const rid = req.params.rid;
+  var groupdelivery = {
+    email: req.body.email,
+    title: req.body.title,
+    content: req.body.content,
+    image: req.body.image,
+    member: req.body.member
+  };
+
+  connection.query(`UPDATE groupdeliverys SET email=?, title=?, content=?, image=?, member=? WHERE id=?;`,
+    [groupdelivery.email, groupdelivery.title, groupdelivery.content, groupdelivery.image, groupdelivery.member, rid],
+    (error, result, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Database Error');
+        return;
+      }
+      if (result.affectedRows === 0) {
+        res.status(404).send('groupdelivery not found');
+      } else {
+        res.status(200).json({ id: rid, ...groupdelivery });
+      }
+  });
+});
+
 groupdeliveryRouter.delete('/deletegroupdelivery/:rid', async (req, res) => {
   connection.query(`DELETE FROM groupdeliverys WHERE id = ${req.params.rid}`, (error, result, fields) => {
       console.log(result);
