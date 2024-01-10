@@ -32,6 +32,7 @@ groupbuyingRouter.post('/creategroupbuying', async (req, res) => {
       image: req.body.image,
       member: req.body.member
   }
+  
       
   connection.query(`INSERT INTO groupbuyings (email, title, content, image, member) VALUES (?, ?, ?, ?, ?);`,
     [groupbuying.email, groupbuying.title, groupbuying.content, groupbuying.image, groupbuying.member],
@@ -47,8 +48,34 @@ groupbuyingRouter.post('/creategroupbuying', async (req, res) => {
   });
 });
 
+groupbuyingRouter.put('/updategroupbuying/:id', (req, res) => {
+  const { id } = req.params;
+  var groupbuying = {
+      email: req.body.email,
+      title: req.body.title,
+      content: req.body.content,
+      image: req.body.image,
+      member: req.body.member
+  }
+
+  connection.query(`UPDATE groupbuyings SET email=?, title=?, content=?, image=?, member=? WHERE id=?;`,
+    [groupbuying.email, groupbuying.title, groupbuying.content, groupbuying.image, groupbuying.member, id],
+    (error, result, fields) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send('Database Error');
+        return;
+      }
+      if (result.affectedRows === 0) {
+        res.status(404).send('GroupBuying not found');
+      } else {
+        res.status(200).json({ id, ...groupbuying });
+      }
+  });
+});
+
 groupbuyingRouter.delete('/deletegroupbuying/:rid', async (req, res) => {
-  await connection.query(`DELETE FROM groupbuyings WHERE id = ${req.params.rid}`, (error, result, fields) => {
+  connection.query(`DELETE FROM groupbuyings WHERE id = ${req.params.rid}`, (error, result, fields) => {
       console.log(result);
       console.log(req.params.rid);
       if(result.affectedRows === 0) {
